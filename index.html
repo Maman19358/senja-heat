@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SENJA HEAT — Teluk Senja</title>
+  <link rel="stylesheet" href="./src/ui/styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three.module.min.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="game-container"></div>
+  <div id="damage-vignette"></div>
+
+  <!-- UI Overlay -->
+  <div id="ui-layer">
+    <!-- Top-Left: Mission Panel -->
+    <div id="hud-mission" class="hud-panel">
+      <div id="mission-title">SENJA HEAT</div>
+      <div id="mission-obj">Explore Teluk Senja or start a mission</div>
+      <div id="mission-stage-bar"><div id="mission-stage-fill"></div></div>
+      <div id="mission-next">Press M for Map / ESC for Menu</div>
+    </div>
+
+    <!-- Police Response List -->
+    <div id="police-response-list"></div>
+
+    <!-- Top-Right: Clock, Cash, Wanted, Weapons -->
+    <div id="hud-topright" class="hud-panel">
+      <div id="hud-clock">18:00 DAY 1</div>
+      <div id="hud-cash">$1,500</div>
+      <div id="hud-wanted">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <div id="hud-weapons">
+        <div class="weapon-slot active" data-slot="1">FIST<span class="weapon-ammo">∞</span></div>
+        <div class="weapon-slot" data-slot="2">PIST<span class="weapon-ammo">34</span></div>
+        <div class="weapon-slot" data-slot="3">RIFL<span class="weapon-ammo">90</span></div>
+      </div>
+    </div>
+
+    <!-- Bottom-Left: Minimap & Status Bars -->
+    <div id="hud-bottomleft" class="hud-panel">
+      <div id="minimap-container">
+        <canvas id="minimap-canvas" width="180" height="180"></canvas>
+      </div>
+      <div id="location-label">PANTAI SENJA</div>
+      <div class="status-bar-container">
+        <span class="status-bar-label">HP</span>
+        <div class="status-bar"><div id="health-fill" class="status-fill" style="width: 100%;"></div></div>
+      </div>
+      <div class="status-bar-container">
+        <span class="status-bar-label">ARM</span>
+        <div class="status-bar"><div id="armour-fill" class="status-fill" style="width: 50%;"></div></div>
+      </div>
+      <div class="status-bar-container">
+        <span class="status-bar-label">REP</span>
+        <div class="status-bar"><div id="rep-fill" class="status-fill" style="width: 15%;"></div></div>
+      </div>
+    </div>
+
+    <!-- Bottom-Right: Vehicle Panel -->
+    <div id="hud-vehicle" class="hud-panel">
+      <div id="veh-name">KENCANA GT</div>
+      <div id="veh-speed">54 <span>KM/H</span></div>
+      <div id="veh-speed-bar"><div id="veh-speed-fill"></div></div>
+      <div id="veh-gear">GEAR D • KENCANA GT</div>
+      <div id="veh-radio">RADIO: SENJA WAVE (SYNTHWAVE)</div>
+    </div>
+
+    <!-- Interaction Prompt -->
+    <div id="interaction-prompt">Press E to Enter Car</div>
+
+    <!-- Dialogue Box -->
+    <div id="dialogue-box">
+      <canvas id="dialogue-portrait" width="64" height="64"></canvas>
+      <div id="dialogue-content">
+        <div id="dialogue-speaker">MIRA</div>
+        <div id="dialogue-text">Listen up Raka, the heat is on. Don't let SPD catch you with the package.</div>
+      </div>
+    </div>
+
+    <!-- Crosshair & Hitmarker -->
+    <div id="crosshair"></div>
+    <div id="hitmarker"></div>
+
+    <!-- Title Screen -->
+    <div id="title-screen" class="fullscreen-overlay">
+      <h1>SENJA HEAT</h1>
+      <h2>TELUK SENJA — CRIME CHRONICLES</h2>
+      <button class="menu-btn" id="btn-continue">CONTINUE</button>
+      <button class="menu-btn" id="btn-newgame">NEW GAME</button>
+      <button class="menu-btn" id="btn-settings">SETTINGS</button>
+    </div>
+
+    <!-- Pause Menu -->
+    <div id="pause-menu" class="fullscreen-overlay">
+      <h1>PAUSED</h1>
+      <button class="menu-btn" id="btn-resume">RESUME</button>
+      <button class="menu-btn" id="btn-map">CITY MAP</button>
+      <button class="menu-btn" id="btn-quit">QUIT TO TITLE</button>
+    </div>
+
+    <!-- City Map Screen -->
+    <div id="map-screen" class="fullscreen-overlay">
+      <h2 style="color: var(--sun-gold); margin-bottom: 16px; letter-spacing: 2px;">TELUK SENJA — CITY MAP</h2>
+      <div id="map-canvas-container">
+        <canvas id="map-canvas" width="800" height="600"></canvas>
+      </div>
+      <button class="menu-btn" id="btn-close-map" style="margin-top: 16px;">CLOSE MAP</button>
+    </div>
+  </div>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
