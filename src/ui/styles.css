@@ -1,0 +1,475 @@
+/* SENJA HEAT Stylesheet - Golden Hour Aesthetics (Revision 4 - Denser HUD Final) */
+:root {
+  --primary-pink: #ff2a85;
+  --primary-orange: #ff702a;
+  --sun-gold: #ffd166;
+  --dark-bg: #0b0914;
+  --panel-bg: rgba(10, 8, 20, 0.92);
+  --border-glow: rgba(255, 42, 133, 0.45);
+  --text-main: #f0f0f5;
+  --text-muted: #9a9ab0;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--dark-bg);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-main);
+}
+
+#game-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* UI Overlay Layer */
+#ui-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#ui-layer > * {
+  pointer-events: auto;
+}
+
+/* HUD Panels */
+.hud-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--border-glow);
+  backdrop-filter: blur(6px);
+  border-radius: 6px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+
+/* Top-Left: Mission Panel */
+#hud-mission {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 280px;
+}
+#mission-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--sun-gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+#mission-obj {
+  font-size: 13px;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+#mission-stage-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+#mission-stage-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-pink), var(--primary-orange));
+  transition: width 0.3s;
+}
+#mission-next {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Top-Right: Clock, Cash, Wanted, Weapons */
+#hud-topright {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+#hud-clock {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--sun-gold);
+  letter-spacing: 1px;
+}
+#hud-cash {
+  font-size: 22px;
+  font-weight: 900;
+  color: #2ecc71;
+  text-shadow: 0 0 10px rgba(46, 204, 113, 0.4);
+}
+#hud-wanted {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  font-size: 16px;
+  color: #e74c3c;
+}
+.star {
+  color: rgba(255,255,255,0.2);
+  text-shadow: none;
+}
+.star.active {
+  color: #f1c40f;
+  text-shadow: 0 0 8px #f1c40f;
+}
+#hud-weapons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 4px;
+}
+.weapon-slot {
+  width: 36px;
+  height: 36px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.weapon-slot.active {
+  border-color: var(--primary-pink);
+  background: rgba(255, 42, 133, 0.15);
+  color: var(--text-main);
+}
+.weapon-ammo {
+  font-size: 9px;
+  color: var(--sun-gold);
+}
+
+/* Bottom-Left: Minimap & Status Bars */
+#hud-bottomleft {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#minimap-container {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid var(--primary-pink);
+  overflow: hidden;
+  background: #111;
+  position: relative;
+  align-self: center;
+  box-shadow: 0 0 15px rgba(255, 42, 133, 0.4);
+}
+#minimap-canvas {
+  width: 100%;
+  height: 100%;
+}
+#location-label {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--sun-gold);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.status-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+.status-bar-label {
+  width: 50px;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+.status-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.status-fill {
+  height: 100%;
+  width: 100%;
+  transition: width 0.2s;
+}
+#health-fill { background: #e74c3c; }
+#armour-fill { background: #3498db; }
+#rep-fill { background: var(--sun-gold); }
+
+/* Bottom-Right: Vehicle Panel */
+#hud-vehicle {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 240px;
+  display: none;
+}
+#veh-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--sun-gold);
+  margin-bottom: 4px;
+}
+#veh-speed {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--text-main);
+  letter-spacing: 1px;
+}
+#veh-speed span {
+  font-size: 12px;
+  font-weight: normal;
+  color: var(--text-muted);
+}
+#veh-speed-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 6px 0 4px 0;
+}
+#veh-speed-fill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--sun-gold), var(--primary-orange));
+  transition: width 0.2s;
+}
+#veh-gear {
+  font-size: 11px;
+  color: var(--sun-gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+#veh-radio {
+  font-size: 11px;
+  color: var(--primary-orange);
+  margin-top: 4px;
+}
+
+/* Police Response List */
+#police-response-list {
+  position: absolute;
+  top: 175px;
+  left: 20px;
+  width: 220px;
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(10, 8, 20, 0.92);
+  border: 1px solid var(--border-glow);
+  backdrop-filter: blur(6px);
+  border-radius: 6px;
+  padding: 8px 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+}
+.police-unit-item {
+  background: rgba(231, 76, 60, 0.25);
+  border-left: 3px solid #e74c3c;
+  padding: 4px 8px;
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 2px;
+  color: #ffcccc;
+}
+
+/* Dialogue Box */
+#dialogue-box {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  background: var(--panel-bg);
+  border: 2px solid var(--primary-pink);
+  border-radius: 8px;
+  padding: 14px;
+  display: none;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 0 30px rgba(255, 42, 133, 0.5);
+  z-index: 50;
+}
+#dialogue-portrait {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid var(--sun-gold);
+  background: #222;
+  flex-shrink: 0;
+}
+#dialogue-content {
+  flex: 1;
+}
+#dialogue-speaker {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--sun-gold);
+  margin-bottom: 4px;
+}
+#dialogue-text {
+  font-size: 14px;
+  color: var(--text-main);
+  line-height: 1.4;
+}
+
+/* Interaction Prompt */
+#interaction-prompt {
+  position: absolute;
+  bottom: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.85);
+  border: 1px solid var(--sun-gold);
+  color: var(--sun-gold);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  display: none;
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.4);
+}
+
+/* Crosshair & Hitmarker */
+#crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  border: 2px solid rgba(255,255,255,0.7);
+  border-radius: 50%;
+  pointer-events: none;
+  display: none;
+}
+#hitmarker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  display: none;
+}
+#hitmarker::before, #hitmarker::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 100%; height: 2px;
+  background: #e74c3c;
+}
+#hitmarker::before { transform: translate(-50%, -50%) rotate(45deg); }
+#hitmarker::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+/* Damage Vignette */
+#damage-vignette {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  box-shadow: inset 0 0 100px rgba(231, 76, 60, 0);
+  pointer-events: none;
+  transition: box-shadow 0.2s;
+  z-index: 5;
+}
+#damage-vignette.hit {
+  box-shadow: inset 0 0 100px rgba(231, 76, 60, 0.8);
+}
+
+/* Menus & Overlays */
+.fullscreen-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(11, 9, 20, 0.94);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+#title-screen h1 {
+  font-size: 64px;
+  font-weight: 900;
+  letter-spacing: 4px;
+  background: linear-gradient(135deg, var(--sun-gold), var(--primary-pink));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 10px 30px rgba(255, 42, 133, 0.4);
+  margin-bottom: 8px;
+}
+#title-screen h2 {
+  font-size: 18px;
+  color: var(--text-muted);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+.menu-btn {
+  background: linear-gradient(90deg, var(--primary-pink), var(--primary-orange));
+  border: none;
+  color: white;
+  padding: 12px 36px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 8px;
+  width: 220px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(255, 42, 133, 0.3);
+}
+.menu-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 42, 133, 0.5);
+}
+
+/* Pause Menu & City Map Screen */
+#pause-menu, #map-screen {
+  display: none;
+}
+#map-screen {
+  background: #0b0914;
+}
+#map-canvas-container {
+  width: 800px;
+  height: 600px;
+  border: 2px solid var(--primary-pink);
+  border-radius: 8px;
+  position: relative;
+  background: #110e1b;
+}
+#map-canvas {
+  width: 100%;
+  height: 100%;
+}
